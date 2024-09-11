@@ -1,0 +1,46 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #ddd;
+    line-height: 1.65;
+}
+
+.container-satu {
+    width: 800px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between; /* Aligns content with space in between */
+}
+
+.kolom-utama {
+    flex: 2; /* Takes up the majority of the space */
+    margin: 0 20px; /* Adds space around the main column */
+}
+
+.sidebar-satu, .sidebar-dua {
+    flex: 1; /* Each sidebar takes up equal space */
+    background-color: #f4f4f4;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.sidebar-satu ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar-satu ul li {
+    margin: 10px 0;
+}
+
+.sidebar-satu ul li a {
+    text-decoration: none;
+    color: blue;
+}

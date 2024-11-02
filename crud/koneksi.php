@@ -1,11 +1,11 @@
 <?php
 // Koneksi ke database
-$koneksi = mysqli_connect("localhost", "root", "", "prakwebdb");
 
+define('HOST','localhost');
+define('USER','root');
+define('PASS','');
+define('DB1', 'prakwebdb');
 
 //periksa koneksi
-
-if (mysqli_connect_errno()) {
-    die("Koneksi gagal : " . mysqli_connect_error());
-}
+$db1 = new mysqli(HOST,USER,PASS,DB1);
 ?>

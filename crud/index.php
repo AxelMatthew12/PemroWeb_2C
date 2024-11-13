@@ -55,81 +55,85 @@ include 'auth.php';
     </div>
 </form>
 
-        <div class="data mt-4"></div>
+<div class="data mt-4"></div>
 
-        <div class="text-center mt-4">
-            &copy; <?php echo date('Y'); ?> by <a href="https://google.com">Desain Dan Pemrograman Web</a>
-        </div>
-    </div>
+<div class="text-center mt-4">
+    &copy; <?php echo date('Y'); ?> by <a href="https://google.com">Desain Dan Pemrograman Web</a>
+</div>
 
-    <!-- jQuery and JavaScript dependencies -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<!-- jQuery and JavaScript dependencies -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-    <script type="text/javascript">
-       $(document).ready(function() {
-    // Setup AJAX for CSRF Token
-    $.ajaxSetup({
-        headers: {
-            'Csrf-Token': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    // Load data into .data div
-    $('.data').load('data.php');
-});
-
-$('#simpan').click(function(){
-    var data = $('.form-data').serialize();
-
-    var nama = document.getElementById("nama").value;
-    var alamat = document.getElementById("alamat").value;
-    var no_telp = document.getElementById("no_telp").value;
-
-    if (nama == "") {
-        document.getElementById("err_nama").innerHTML = "Nama Harus Diisi";
-    } else {
-        document.getElementById("err_nama").innerHTML = "";
-    }
-
-    if (alamat == "") {
-        document.getElementById("err_alamat").innerHTML = "Alamat Harus Diisi";
-    } else {
-        document.getElementById("err_alamat").innerHTML = "";
-    }
-
-    if (!document.getElementById("jkel1").checked && !document.getElementById("jkel2").checked) {
-        document.getElementById("err_jenis_kelamin").innerHTML = "Jenis Kelamin Harus Dipilih";
-    } else {
-        document.getElementById("err_jenis_kelamin").innerHTML = "";
-    }
-
-    if (no_telp == "") {
-        document.getElementById("err_no_telp").innerHTML = "No Telepon Harus Diisi";
-    } else {
-        document.getElementById("err_no_telp").innerHTML = "";
-    }
-
-    if (nama != "" && alamat != "" && (document.getElementById("jkel1").checked || document.getElementById("jkel2").checked) && no_telp != "") {
-        $.ajax({
-            type: 'POST',
-            url: "form_Action.php",
-            data: data,
-            success: function() {
-                $('.data').load("data.php");
-                document.getElementById("id").value = "";
-                document.getElementById("form-data").reset();
-            },
-            error: function(response) {
-                console.log(response.responseText);
+<script type="text/javascript">
+    $(document).ready(function() {
+        // Setup AJAX for CSRF Token
+        $.ajaxSetup({
+            headers: {
+                'Csrf-Token': $('meta[name="csrf-token"]').attr('content')
             }
         });
-    }
-});
 
- 
-    </script>
+        // Load data into .data div initially
+        loadData();
+
+        // Auto reload every 5 seconds
+        setInterval(loadData, 5000);
+
+        function loadData() {
+            $('.data').load('data.php');
+        }
+
+        $('#simpan').click(function(){
+            var data = $('.form-data').serialize();
+
+            var nama = document.getElementById("nama").value;
+            var alamat = document.getElementById("alamat").value;
+            var no_telp = document.getElementById("no_telp").value;
+
+            if (nama == "") {
+                document.getElementById("err_nama").innerHTML = "Nama Harus Diisi";
+            } else {
+                document.getElementById("err_nama").innerHTML = "";
+            }
+
+            if (alamat == "") {
+                document.getElementById("err_alamat").innerHTML = "Alamat Harus Diisi";
+            } else {
+                document.getElementById("err_alamat").innerHTML = "";
+            }
+
+            if (!document.getElementById("jkel1").checked && !document.getElementById("jkel2").checked) {
+                document.getElementById("err_jenis_kelamin").innerHTML = "Jenis Kelamin Harus Dipilih";
+            } else {
+                document.getElementById("err_jenis_kelamin").innerHTML = "";
+            }
+
+            if (no_telp == "") {
+                document.getElementById("err_no_telp").innerHTML = "No Telepon Harus Diisi";
+            } else {
+                document.getElementById("err_no_telp").innerHTML = "";
+            }
+
+            if (nama != "" && alamat != "" && (document.getElementById("jkel1").checked || document.getElementById("jkel2").checked) && no_telp != "") {
+                $.ajax({
+                    type: 'POST',
+                    url: "form_Action.php",
+                    data: data,
+                    success: function() {
+                        loadData();
+                        document.getElementById("id").value = "";
+                        document.getElementById("form-data").reset();
+                    },
+                    error: function(response) {
+                        console.log(response.responseText);
+                    }
+                });
+            }
+        });
+    });
+</script>
 </body>
 </html>

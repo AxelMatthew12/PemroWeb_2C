@@ -6,4 +6,3 @@ abstract class Model{
     public abstract function updateData($id, $data);
     public abstract function deleteData($id);
 }
-?>
